@@ -15,5 +15,5 @@ variable "role_name_for_api_gateway" {
 }
 
 variable "policy_name_for_api_gateway" {
-  default = "py-terraform-policy-lambda"
+  default = "py-terraform-policy-api_gateway"
 }
