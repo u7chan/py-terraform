@@ -10,6 +10,10 @@ variable "policy_name_for_lambda" {
   default = "py-terraform-policy-lambda"
 }
 
+variable "template_policy_for_lambda" {
+  default = "./lambda_policy.tpl.json"
+}
+
 variable "role_name_for_api_gateway" {
   default = "py-terraform-role-api_gateway"
 }

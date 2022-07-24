@@ -1,7 +1,8 @@
 locals {
-  role_lambda_name   = var.role_name_for_lambda
-  policy_lambda_name = var.policy_name_for_lambda
-  attach_lambda_name = "${var.policy_name_for_lambda}_attach"
+  lambda_role            = var.role_name_for_lambda
+  lambda_policy          = var.policy_name_for_lambda
+  lambda_attach          = "${var.policy_name_for_lambda}_attach"
+  lambda_template_policy = var.template_policy_for_lambda
 }
 
 data "aws_iam_policy_document" "lambda" {
@@ -19,7 +20,7 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 data "template_file" "lambda" {
-  template = file("./lambda_policy.tpl.json")
+  template = file(local.lambda_template_policy)
 
   vars = {
     region = "${local.region_name}"
@@ -27,17 +28,17 @@ data "template_file" "lambda" {
 }
 
 resource "aws_iam_policy" "lambda" {
-  name   = local.policy_lambda_name
+  name   = local.lambda_policy
   policy = data.template_file.lambda.rendered
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = local.role_lambda_name
+  name               = local.lambda_role
   assume_role_policy = data.aws_iam_policy_document.lambda.json
 }
 
 resource "aws_iam_policy_attachment" "lambda" {
-  name       = local.attach_lambda_name
+  name       = local.lambda_attach
   policy_arn = aws_iam_policy.lambda.arn
   roles = [
     aws_iam_role.lambda.name
