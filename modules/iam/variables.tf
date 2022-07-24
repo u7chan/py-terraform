@@ -17,3 +17,8 @@ variable "role_name_for_api_gateway" {
 variable "policy_name_for_api_gateway" {
   default = "py-terraform-policy-api_gateway"
 }
+
+variable "template_policy_for_api_gateway" {
+  default = "./api-gateway_policy.tpl.json"
+}
+

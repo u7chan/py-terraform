@@ -1,7 +1,8 @@
 locals {
-  role_api_gateway_name   = var.role_name_for_api_gateway
-  policy_api_gateway_name = var.policy_name_for_api_gateway
-  attach_api_gateway_name = "${var.policy_name_for_api_gateway}_attach"
+  api_gateway_role            = var.role_name_for_api_gateway
+  api_gateway_policy          = var.policy_name_for_api_gateway
+  api_gateway_attach          = "${var.policy_name_for_api_gateway}_attach"
+  api_gateway_template_policy = var.template_policy_for_api_gateway
 }
 
 data "aws_iam_policy_document" "api_gateway" {
@@ -19,7 +20,7 @@ data "aws_iam_policy_document" "api_gateway" {
 }
 
 data "template_file" "api_gateway" {
-  template = file("./api-gateway_policy.tpl.json")
+  template = file(local.api_gateway_template_policy)
 
   vars = {
     region = "${local.region_name}"
@@ -27,17 +28,17 @@ data "template_file" "api_gateway" {
 }
 
 resource "aws_iam_policy" "api_gateway" {
-  name   = local.policy_api_gateway_name
+  name   = local.api_gateway_policy
   policy = data.template_file.api_gateway.rendered
 }
 
 resource "aws_iam_role" "api_gateway" {
-  name               = local.role_api_gateway_name
+  name               = local.api_gateway_role
   assume_role_policy = data.aws_iam_policy_document.api_gateway.json
 }
 
 resource "aws_iam_policy_attachment" "api_gateway" {
-  name       = local.attach_api_gateway_name
+  name       = local.api_gateway_attach
   policy_arn = aws_iam_policy.api_gateway.arn
   roles = [
     aws_iam_role.api_gateway.name
