@@ -1,6 +1,7 @@
 locals {
   role_api_gateway_name   = var.role_name_for_api_gateway
   policy_api_gateway_name = var.policy_name_for_api_gateway
+  attach_api_gateway_name = "${var.policy_name_for_api_gateway}_attach"
 }
 
 data "aws_iam_policy_document" "api_gateway" {
@@ -33,4 +34,12 @@ resource "aws_iam_policy" "api_gateway" {
 resource "aws_iam_role" "api_gateway" {
   name               = local.role_api_gateway_name
   assume_role_policy = data.aws_iam_policy_document.api_gateway.json
+}
+
+resource "aws_iam_policy_attachment" "api_gateway" {
+  name       = local.attach_api_gateway_name
+  policy_arn = aws_iam_policy.api_gateway.arn
+  roles = [
+    aws_iam_role.api_gateway.name
+  ]
 }
