@@ -1,5 +1,6 @@
-provider "aws" {
-  region = var.aws_region
+locals {
+  lambda_name = var.iam_for_lambda
+  api_gateway = var.iam_for_api_gateway
 }
 
 data "aws_iam_policy_document" "policy" {
@@ -17,11 +18,11 @@ data "aws_iam_policy_document" "policy" {
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name               = "terraform-iam-for-lambda"
+  name               = local.lambda_name
   assume_role_policy = data.aws_iam_policy_document.policy.json
 }
 
 resource "aws_iam_role" "iam_for_api_gateway" {
-  name               = "terraform-iam-for-api-gateway"
+  name               = local.api_gateway
   assume_role_policy = data.aws_iam_policy_document.policy.json
 }
