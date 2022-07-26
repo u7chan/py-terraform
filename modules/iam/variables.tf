@@ -11,7 +11,7 @@ variable "policy_name_for_lambda" {
 }
 
 variable "template_policy_for_lambda" {
-  default = "./lambda_policy.tpl.json"
+  default = "./tpl/lambda_policy.tpl.json"
 }
 
 variable "role_name_for_api_gateway" {
@@ -23,6 +23,6 @@ variable "policy_name_for_api_gateway" {
 }
 
 variable "template_policy_for_api_gateway" {
-  default = "./api-gateway_policy.tpl.json"
+  default = "./tpl/api-gateway_policy.tpl.json"
 }
 
