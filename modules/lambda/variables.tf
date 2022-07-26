@@ -5,3 +5,5 @@ variable "aws_region" {
 variable "lambda_name" {
   default = "py-terraform-example-lambda"
 }
+
+variable "lambda_role" {}

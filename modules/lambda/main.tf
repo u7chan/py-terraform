@@ -1,6 +1,7 @@
 locals {
   lambda_region_name = var.aws_region
   lambda_name        = var.lambda_name
+  lambda_role        = var.lambda_role
 }
 
 provider "aws" {
@@ -17,7 +18,7 @@ resource "aws_lambda_function" "function_main" {
   function_name = local.lambda_name
   handler       = "main.lambda_handler"
   runtime       = "python3.9"
-  role          = "arn:aws:iam::436969723105:role/py-terraform-role-lambda" #aws_iam_role.lambda.arn
+  role          = local.lambda_role
 
   filename         = data.archive_file.function_main_source.output_path
   source_code_hash = data.archive_file.function_main_source.output_base64sha256
