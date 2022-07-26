@@ -23,5 +23,5 @@ $ terraform destroy -auto-approve
 ## HCL ファイルをフォーマット
 
 ```
-$ terraform fmt
+$ terraform fmt -recursive
 ```
