@@ -23,7 +23,7 @@ data "template_file" "lambda" {
   template = file(local.iam_lambda_template_policy)
 
   vars = {
-    region = "${local.region_name}"
+    region = "${local.iam_region_name}"
   }
 }
 

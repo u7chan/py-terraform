@@ -23,7 +23,7 @@ data "template_file" "api_gateway" {
   template = file(local.iam_api_gateway_template_policy)
 
   vars = {
-    region = "${local.region_name}"
+    region = "${local.iam_region_name}"
   }
 }
 
