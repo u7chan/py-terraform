@@ -1,13 +1,13 @@
 locals {
-  api_get_example  = var.api_get_example
-  lambda_arn       = var.lambda_arn
-  api_gateway_role = var.api_gateway_role
+  name       = var.api_get_example
+  lambda_arn = var.lambda_arn
+  role       = var.api_gateway_role
 }
 
 resource "aws_api_gateway_resource" "api_get_example" {
   rest_api_id = aws_api_gateway_rest_api.api_main.id
   parent_id   = aws_api_gateway_rest_api.api_main.root_resource_id
-  path_part   = local.api_get_example
+  path_part   = local.name
 }
 
 resource "aws_api_gateway_method" "api_get_example" {
@@ -41,8 +41,8 @@ resource "aws_api_gateway_integration" "api_get_example" {
   http_method             = aws_api_gateway_method.api_get_example.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = local.lambda_arn       // Lambda ARN
-  credentials             = local.api_gateway_role // IAM API Gateway ARN
+  uri                     = local.lambda_arn // Lambda ARN
+  credentials             = local.role       // IAM API Gateway ARN
 }
 
 resource "aws_api_gateway_integration_response" "api_get_example" {

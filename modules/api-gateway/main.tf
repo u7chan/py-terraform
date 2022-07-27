@@ -1,6 +1,6 @@
 locals {
   region_name = var.aws_region
-  name        = var.api_gateway_name
+  api_name    = var.api_gateway_name
 }
 
 provider "aws" {
@@ -8,5 +8,5 @@ provider "aws" {
 }
 
 resource "aws_api_gateway_rest_api" "api_main" {
-  name = local.name
+  name = local.api_name
 }
