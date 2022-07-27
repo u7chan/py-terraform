@@ -1,7 +1,7 @@
 locals {
   region_name = var.aws_region
-  lambda_name        = var.lambda_name
-  lambda_role        = var.lambda_role
+  lambda_name = var.lambda_name
+  lambda_role = var.lambda_role
 }
 
 provider "aws" {
