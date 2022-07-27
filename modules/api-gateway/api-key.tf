@@ -1,4 +1,3 @@
-
 locals {
   key_name = var.api_key_name
 }
