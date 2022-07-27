@@ -1,4 +1,4 @@
-# 　 py-terraform
+# py-terraform
 
 ## 各種パッケージのインストール
 
@@ -7,6 +7,10 @@ $ terraform init
 ```
 
 ## 構築内容の確認
+
+```
+$ terraform plan
+```
 
 ## インフラを構築
 
